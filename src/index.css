@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --ac: #1d6bff;
+  --ac2: #22d3ee;
+  --bg: #040a18;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { background: var(--bg); color: #e8eeff; overflow-x: hidden; }
+
+/* animatsiyali to'r fon */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(60,110,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60,110,255,.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 30%, #000, transparent 75%);
+  animation: gridMove 14s linear infinite;
+}
+@keyframes gridMove { to { background-position: 44px 44px; } }
+#root { position: relative; z-index: 1; }
+
+/* shisha kartalar (hover tezlashtirildi: .15s) */
+.glass {
+  background: rgba(9,20,48,.62);
+  border: 1px solid rgba(70,120,255,.25);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.glass:hover { border-color: var(--ac); box-shadow: 0 0 25px -4px var(--ac); }
+
+/* gradient matn */
+.gt {
+  background: linear-gradient(100deg, var(--ac), var(--ac2), var(--ac));
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shine 5s linear infinite;
+}
+@keyframes shine { to { background-position: 200% center; } }
+
+/* tugmalar (tezlashtirildi) */
+.bp, .bo {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 999px;
+  font-weight: 500; font-size: 15px; cursor: pointer; text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+}
+.bp { background: var(--ac); color: #fff; box-shadow: 0 0 24px -4px var(--ac); }
+.bo { border: 1px solid var(--ac); color: #dbe6ff; background: transparent; }
+.bp:hover, .bo:hover, .bp:focus-visible, .bo:focus-visible {
+  transform: translateY(-2px); box-shadow: 0 6px 22px -4px var(--ac); outline: none;
+}
+
+/* navbar havolalari */
+.nl { position: relative; font-size: 14px; color: #aab6d6; padding: 6px 2px; transition: color .15s; }
+.nl.on, .nl:hover { color: #fff; }
+.nl::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+  background: var(--ac); border-radius: 2px; transform: scaleX(0); transition: transform .2s;
+}
+.nl.on::after { transform: scaleX(1); }
+
+/* paydo bo'lish animatsiyasi (tezlashtirildi) */
+.rv { opacity: 0; transform: translateY(20px); transition: opacity .4s, transform .4s; }
+.rv.in { opacity: 1; transform: none; }
+
+/* nurli doira */
+.ring {
+  --rs: min(78vw, 380px);
+  position: relative; width: var(--rs); aspect-ratio: 1; border-radius: 50%;
+  border: 3px solid var(--ac);
+  box-shadow: 0 0 60px 6px var(--ac), inset 0 0 60px 4px rgba(29,107,255,.45);
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% { box-shadow: 0 0 90px 14px var(--ac), inset 0 0 80px 8px rgba(29,107,255,.55); }
+}
+.orb {
+  position: absolute; inset: -26px; border-radius: 50%;
+  border: 1px dashed rgba(120,170,255,.45); animation: spin 24s linear infinite;
+}
+.orb.r { inset: 34px; animation-direction: reverse; animation-duration: 16s; border-color: rgba(34,211,238,.4); }
+.orb i {
+  position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--ac2); box-shadow: 0 0 14px var(--ac2);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.float { animation: float 5s ease-in-out infinite; }
+@keyframes float { 50% { transform: translateY(-10px); } }
+
+/* doira ichidagi rasm: pastki qismi doira bo'ylab kesiladi, boshi doiradan biroz chiqadi */
+.pop {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: calc(var(--rs) * 1.2); height: calc(var(--rs) * 1.3);
+  pointer-events: none;
+  --cy: calc(var(--rs) * 0.8 + 3px);
+  --r: calc(var(--rs) / 2 - 3px);
+  -webkit-mask-image: radial-gradient(circle at 50% var(--cy), #000 var(--r), transparent calc(var(--r) + 1px)), linear-gradient(#000, #000);
+  mask-image: radial-gradient(circle at 50% var(--cy), #000 var(--r), transparent calc(var(--r) + 1px)), linear-gradient(#000, #000);
+  -webkit-mask-size: 100% 100%, 100% var(--cy);
+  mask-size: 100% 100%, 100% var(--cy);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.pop img {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 92%; height: auto; max-width: none; user-select: none;
+  filter: drop-shadow(0 0 18px rgba(0,0,0,.5));
+}
+
+/* imzo */
+.sig {
+  font-family: "Caveat", cursive; font-size: 38px; line-height: 1; color: var(--ac);
+  text-shadow: 0 0 14px var(--ac); transform: rotate(-5deg); transform-origin: left bottom;
+}
+.draw { stroke-dasharray: 130; stroke-dashoffset: 130; transition: stroke-dashoffset .8s .3s ease; filter: drop-shadow(0 0 6px var(--ac)); }
+.rv.in .draw { stroke-dashoffset: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .rv { opacity: 1; transform: none; }
+  .draw { stroke-dashoffset: 0; }
+}
